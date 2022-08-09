@@ -27,6 +27,8 @@ class MobileScanner extends StatefulWidget {
   /// Set to false if you don't want duplicate scans.
   final bool allowDuplicates;
 
+  final Color backgroundColor;
+
   /// Create a [MobileScanner] with a [controller], the [controller] must has been initialized.
   const MobileScanner({
     super.key,
@@ -34,6 +36,7 @@ class MobileScanner extends StatefulWidget {
     this.controller,
     this.fit = BoxFit.cover,
     this.allowDuplicates = false,
+    this.backgroundColor = Colors.black,
   });
 
   @override
@@ -91,14 +94,17 @@ class _MobileScannerState extends State<MobileScanner>
             child: SizedBox(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
-              child: FittedBox(
-                fit: widget.fit,
-                child: SizedBox(
-                  width: value.size.width,
-                  height: value.size.height,
-                  child: kIsWeb
-                      ? HtmlElementView(viewType: value.webId!)
-                      : Texture(textureId: value.textureId!),
+              child: ColoredBox(
+                color: widget.backgroundColor,
+                child: FittedBox(
+                  fit: widget.fit,
+                  child: SizedBox(
+                    width: value.size.width,
+                    height: value.size.height,
+                    child: kIsWeb
+                        ? HtmlElementView(viewType: value.webId!)
+                        : Texture(textureId: value.textureId!),
+                  ),
                 ),
               ),
             ),
